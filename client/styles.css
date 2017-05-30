@@ -2,15 +2,23 @@
 
 /* Note: an asteroid image is included in this repo.
 Feel free to use it if you like. */
+
+
 body, html {
-  background-color: red;
+  background-image: url('https://s-media-cache-ak0.pinimg.com/originals/bb/67/ab/bb67ab2ab11dca2347fb27da0f335912.jpg');
+  height: 100%;
+  width: 100%;
 }
 
 .scoreboard {
-  background-color: blue;
+  background-color: #aaa;
+  margin: auto;
+  width: 700px;
 }
 
 .board {
+  margin: auto;
+  position: relative;
   background-color: #ecf0f1;
   width: 700px;
   height: 450px;
