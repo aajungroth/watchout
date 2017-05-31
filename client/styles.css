@@ -23,3 +23,10 @@ body, html {
   width: 700px;
   height: 450px;
 }
+
+svg {
+  margin: auto;
+  position: relative;
+  width: 700px;
+  height: 450px;
+}

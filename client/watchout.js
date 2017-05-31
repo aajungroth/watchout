@@ -99,8 +99,27 @@ var update = function() {
   .duration(5000)
   .style('transform', 'translate(400px, 400px)');*/
 
-console.log(d3);
-console.log(d3.timer);
+//console.log(svg);
+
+var svg = d3.select('.board').append('svg');
+
+svg.append("circle")
+    .attr("cx", 100)
+    .attr("cy", 100)
+    .attr("r", 10)
+    .call(d3.behavior.drag().on("drag", move));
+
+function move() {
+
+
+  d3.select(this)
+      .attr("transform", "translate(" + (d3.event.x - 100) + "," + (d3.event.y - 100) + ")")
+      .attr("r", 10);
+}
+
+
+
+//console.log(d3.timer);
 
 update();
 
