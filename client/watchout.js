@@ -30,14 +30,14 @@ var testAsteroid = d3.select('.board')
 //d3.select("body").transition().duration(2050).style("background-color", "red");
 
 // asteroid = {x:1, y:1}
-var Asteroid = function(i) {
+var Asteroid = function(color) {
 
   this.size = 25;
   this.width = this.size;
   this.height = this.size;
   this.x = getRandomInt(0, 600);
   this.y = getRandomInt(0, 350);
-
+  this.color = color;
 };
 
 function getRandomInt(min, max) {
@@ -50,48 +50,67 @@ var makeAsteriods = function(numberOfAsteroids) {
   var asteroids = [];
 
   for (var i = 0; i < numberOfAsteroids; i++) {
-    asteroids.push(new Asteroid(i));
+    asteroids.push(new Asteroid('red'));
   }
   return asteroids;
 };
 
 var asteroids = makeAsteriods(25);
-
+asteroids.push(new Asteroid('blue'));
+//var svg = d3.select('.board').append('svg');
 var $enemies = d3.select(".board")
-  .selectAll("img")
+  //.selectAll("circle")
+  .append('svg')
+  .selectAll("circle")
   .data(asteroids);
 
 $enemies.enter()
-  .append('img')
-  .attr('src', './asteroid.png')
+  //.append('svg')
+  //.attr('src', './asteroid.png')
+  .append("circle")
   .each(function(enemy){
-    var top = enemy.y + 'px';
-    var left = enemy.x + 'px';
+    //var top = enemy.y + 'px';
+    //var left = enemy.x + 'px';
+
+    if (enemy.color === 'blue') {
+      d3.select(this).call(d3.behavior.drag().on("drag", move));
+    }
+
 
     d3.select(this).attr({
-      width: enemy.width,
-      height: enemy.height
-    });
-
-    d3.select(this).style({
-      position: 'absolute',
-      top : top,
-      left: left,
+      //width: enemy.width,
+      //height: enemy.height
+      cx: enemy.x,
+      cy: enemy.y,
+      r: enemy.size,
+      fill: enemy.color
     });
   });
 
 $enemies.exit().remove();
 
 var update = function() {
-   $enemies.transition()
-   .duration(1000)
-   .style('top', function(enemy){
-      var top = getRandomInt(0, 350);
-      return  top + 'px';
-   }).style('left', function(enemy){
-      var left = getRandomInt(0, 650);
-      return  left + 'px';
-   });
+  $enemies.transition()
+  .duration(1000)
+  .attr('cx', function(enemy){
+    if (enemy.color !== 'blue') {
+      return getRandomInt(0, 650);
+    }
+    //return enemy.x;
+  })
+  .attr('cy', function(enemy){
+    if (enemy.color !== 'blue') {
+      return getRandomInt(0, 350);
+    }
+    //return enemy.y;
+  })
+  /*.style('top', function(enemy){
+    var top = getRandomInt(0, 350);
+    return  top + 'px';
+  }).style('left', function(enemy){
+    var left = getRandomInt(0, 650);
+    return  left + 'px';
+  });*/
 };
 
   /*.style('transform', 'translate(100px, 100px)')
@@ -100,21 +119,21 @@ var update = function() {
   .style('transform', 'translate(400px, 400px)');*/
 
 //console.log(svg);
-
+/*
 var svg = d3.select('.board').append('svg');
 
 svg.append("circle")
-    .attr("cx", 100)
-    .attr("cy", 100)
+    .attr("cx", getRandomInt(0, 650))
+    .attr("cy", getRandomInt(0, 360))
     .attr("r", 10)
+    .style('cursor', 'pointer')
     .call(d3.behavior.drag().on("drag", move));
+*/
 
 function move() {
-
-
   d3.select(this)
-      .attr("transform", "translate(" + (d3.event.x - 100) + "," + (d3.event.y - 100) + ")")
-      .attr("r", 10);
+      .attr("transform", "translate(" + (d3.event.x) + "," + (d3.event.y) + ")")
+      .attr("r", 25);
 }
 
 
@@ -126,7 +145,7 @@ update();
 
 setInterval(function() {
   console.log('timer');
-  asteroids = makeAsteriods(26);
+  //asteroids = makeAsteriods(26);
   update();
 }, 1000);
 
