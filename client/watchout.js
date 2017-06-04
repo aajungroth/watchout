@@ -4,15 +4,17 @@ var getRandomInt = function(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
-var move = function() {
-  d3.select(this)
-      .attr('transform', 'translate(' + (d3.event.x) + ',' + (d3.event.y) + ')')
-      .attr('r', 25);
-};
-
 var board = d3.select('.board').style({
   height: '450px',
   width: '700px'
+});
+
+var mouse = d3.select('.mouse').style({
+  top: '225px',
+  left: '350px',
+  width: '30px',
+  height: '30px',
+  'border-radius': '30px'
 });
 
 var enemies = board.selectAll('.asteroids')
@@ -26,19 +28,18 @@ var enemies = board.selectAll('.asteroids')
   .style('left', function(enemy) {
     return getRandomInt(0, 650);
   });
-  //.each(function(enemy) {
 
-    //if (enemy.color === 'blue') {
-     // d3.select(this).call(d3.behavior.drag().on('drag', move));
-    //}
-
-    /*d3.select(this).attr({
-      cx: enemy.x,
-      cy: enemy.y,
-      r: enemy.size,
-      fill: enemy.color
-    });*/
-  //});
+board.on('mouseover', function() {
+  var loc = d3.mouse(this);
+  mouse = {
+    x: loc[0],
+    y: loc[1]
+  };
+  d3.select('.mouse').style({
+    top: (mouse.y - 15) + 'px',
+    left: (mouse.x - 15) + 'px'
+  });
+});
 
 //enemies.exit().remove();
 

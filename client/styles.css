@@ -12,6 +12,11 @@ Feel free to use it if you like. */
   width: 50px;
 }
 
+.mouse{
+  position: absolute;
+  background-color: blue;
+}
+
 body, html {
   background-image: url('https://s-media-cache-ak0.pinimg.com/originals/bb/67/ab/bb67ab2ab11dca2347fb27da0f335912.jpg');
   height: 100%;
