@@ -3,10 +3,20 @@
 /* Note: an asteroid image is included in this repo.
 Feel free to use it if you like. */
 
+.asteroid {
+  background-image: url('./asteroid.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  height: 50px;
+  width: 50px;
+}
+
 body, html {
   background-image: url('https://s-media-cache-ak0.pinimg.com/originals/bb/67/ab/bb67ab2ab11dca2347fb27da0f335912.jpg');
   height: 100%;
   width: 100%;
+  position: relative;
 }
 
 .scoreboard {

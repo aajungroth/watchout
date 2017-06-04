@@ -1,27 +1,7 @@
-// asteroid = {x:1, y:1}
-var Asteroid = function(color) {
-
-  this.size = 25;
-  this.width = this.size;
-  this.height = this.size;
-  this.x = getRandomInt(0, 600);
-  this.y = getRandomInt(0, 350);
-  this.color = color;
-};
-
 var getRandomInt = function(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
-};
-
-var makeAsteriods = function(numberOfAsteroids) {
-  var asteroids = [];
-
-  for (var i = 0; i < numberOfAsteroids; i++) {
-    asteroids.push(new Asteroid('red'));
-  }
-  return asteroids;
 };
 
 var move = function() {
@@ -30,44 +10,46 @@ var move = function() {
       .attr('r', 25);
 };
 
-var asteroids = makeAsteriods(25);
-asteroids.push(new Asteroid('blue'));
+var board = d3.select('.board').style({
+  height: '450px',
+  width: '700px'
+});
 
-var $enemies = d3.select('.board')
+var enemies = board.selectAll('.asteroids')
+  .data(d3.range(25))
+  .enter()
   .append('svg')
-  .selectAll('circle')
-  .data(asteroids);
+  .attr('class', 'asteroid')
+  .style('top', function(enemy) {
+    return getRandomInt(0, 400);
+  })
+  .style('left', function(enemy) {
+    return getRandomInt(0, 650);
+  });
+  //.each(function(enemy) {
 
-$enemies.enter()
-  .append('circle')
-  .each(function(enemy) {
+    //if (enemy.color === 'blue') {
+     // d3.select(this).call(d3.behavior.drag().on('drag', move));
+    //}
 
-    if (enemy.color === 'blue') {
-      d3.select(this).call(d3.behavior.drag().on('drag', move));
-    }
-
-    d3.select(this).attr({
+    /*d3.select(this).attr({
       cx: enemy.x,
       cy: enemy.y,
       r: enemy.size,
       fill: enemy.color
-    });
-  });
+    });*/
+  //});
 
-$enemies.exit().remove();
+//enemies.exit().remove();
 
 var update = function() {
-  $enemies.transition()
+  enemies.transition()
   .duration(1000)
-  .attr('cx', function(enemy) {
-    if (enemy.color !== 'blue') {
-      return getRandomInt(0, 650);
-    }
+  .style('top', function(enemy) {
+    return getRandomInt(0, 400);
   })
-  .attr('cy', function(enemy) {
-    if (enemy.color !== 'blue') {
-      return getRandomInt(0, 350);
-    }
+  .style('left', function(enemy) {
+    return getRandomInt(0, 650);
   });
 };
 
