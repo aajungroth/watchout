@@ -41,9 +41,7 @@ board.on('mouseover', function() {
   });
 });
 
-//enemies.exit().remove();
-
-var update = function() {
+var update = function(enemies) {
   enemies.transition()
   .duration(1000)
   .style('top', function(enemy) {
@@ -51,11 +49,9 @@ var update = function() {
   })
   .style('left', function(enemy) {
     return getRandomInt(0, 650);
+  }).each('end', function(){
+    update( d3.select(this) );
   });
 };
 
-update();
-
-setInterval(function() {
-  update();
-}, 1000);
+update(enemies);
