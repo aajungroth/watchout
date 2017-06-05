@@ -1,3 +1,13 @@
+var score = 0;
+var highScore = 0;
+var collisionCount = 0;
+
+var updateScore = function(){
+  d3.select('.scoreboard .current span').text(score);
+  d3.select('.scoreboard .highscore span').text(highscore);
+  d3.select('.scoreboard .collisionCount span').text(collisionCount);
+};
+
 var getRandomInt = function(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -23,10 +33,10 @@ var enemies = board.selectAll('.asteroids')
   .append('svg')
   .attr('class', 'asteroid')
   .style('top', function(enemy) {
-    return getRandomInt(0, 400);
+    return getRandomInt(0, 420);
   })
   .style('left', function(enemy) {
-    return getRandomInt(0, 650);
+    return getRandomInt(0, 670);
   });
 
 board.on('mouseover', function() {
@@ -45,13 +55,20 @@ var update = function(enemies) {
   enemies.transition()
   .duration(1000)
   .style('top', function(enemy) {
-    return getRandomInt(0, 400);
+    return getRandomInt(0, 420);
   })
   .style('left', function(enemy) {
-    return getRandomInt(0, 650);
-  }).each('end', function(){
+    return getRandomInt(0, 670);
+  }).each('end', function() {
     update( d3.select(this) );
   });
 };
 
 update(enemies);
+
+var scoreTicker = function() {
+  score = score+1;
+  highscore = Math.max(score, highScore);
+  updateScore();
+};
+setInterval(scoreTicker, 100);
