@@ -4,12 +4,22 @@
 Feel free to use it if you like. */
 
 .asteroid {
-  background-image: url('./asteroid.png');
+  background-image: url('./Transparent_Shuriken.png');
   background-repeat: no-repeat;
   background-size: contain;
   position: absolute;
   height: 30px;
   width: 30px;
+  -webkit-animation: rotation .5s infinite linear;
+}
+
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
 }
 
 .mouse{
